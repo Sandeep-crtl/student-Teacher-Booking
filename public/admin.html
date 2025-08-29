@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Admin Dashboard · Student–Teacher Booking</title>
+	<link rel="stylesheet" href="/admin.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+	<header class="container">
+		<div class="img-container">
+            <img src="./images/logo.png" alt="Logo" height="60" width="60">
+            <h1>Edu-Mentors</h1>
+        </div>
+		<nav class="nav">
+			<button class="btn" onclick="showBookings()">Bookings</button>
+			<button class="btn" onclick="showUsers()">Users</button>
+			<button class="btn" onclick="logout()">Logout</button>
+		</nav>
+	</header>
+	
+	<main class="container">
+		<!-- Login Section -->
+		<section id="login-section" class="card">
+			<h2>Admin Login</h2>
+			<form id="admin-login">
+				<div class="field">
+					<label>Email</label>
+					<input name="email" type="email" value="admin@example.com" required />
+				</div>
+				<div class="field">
+					<label>Password</label>
+					<input name="password" type="password" value="admin123" required />
+				</div>
+				<button class="btn">Login</button>
+				<p id="login-status" class="status"></p>
+			</form>
+		</section>
+
+		<!-- Dashboard Section -->
+		<section id="dashboard-section" class="card" style="display: none;">
+			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+				<div class="stat-card clickable" onclick="showBookingsModal()" style="background: rgba(14,165,233,0.1); padding: 16px; border-radius: 12px; text-align: center; cursor: pointer;">
+					<div style="font-size: 24px; font-weight: 700; color: #0074aa;" id="total-bookings">-</div>
+					<div style="font-size: 14px; color: var(--muted);">Total Bookings</div>
+				</div>
+				<div class="stat-card clickable" onclick="showUsersModal()" style="background: rgba(34,197,94,0.1); padding: 16px; border-radius: 12px; text-align: center; cursor: pointer;">
+					<div style="font-size: 24px; font-weight: 700; color: #00b241;" id="total-users">-</div>
+					<div style="font-size: 14px; color: var(--muted);">Total Users</div>
+				</div>
+				<div class="stat-card clickable" onclick="showTeachersModal()" style="background: rgba(245,158,11,0.1); padding: 16px; border-radius: 12px; text-align: center; cursor: pointer;">
+					<div style="font-size: 24px; font-weight: 700; color: #c99000;" id="total-teachers">-</div>
+					<div style="font-size: 14px; color: var(--muted);">Teachers</div>
+				</div>
+				<div class="stat-card clickable" onclick="showStudentsModal()" style="background: rgba(59,130,246,0.1); padding: 16px; border-radius: 12px; text-align: center; cursor: pointer;">
+					<div style="font-size: 24px; font-weight: 700; color: #0052b6;" id="total-students">-</div>
+					<div style="font-size: 14px; color: var(--muted);">Students</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Bookings Section -->
+		<section id="bookings-section" class="card" style="display: none;">
+			<h2>All Bookings</h2>
+			<div class="field">
+				<label>Search</label>
+				<input id="booking-search" type="text" placeholder="Search by name, email, or subject..." />
+			</div>
+			<div id="bookings-list" class="admin-list"></div>
+		</section>
+
+		<!-- Users Section -->
+		<section id="users-section" class="card" style="display: none;">
+			<h2>All Users</h2>
+			<div class="field">
+				<label>Search</label>
+				<input id="user-search" type="text" placeholder="Search by name, email, or subject..." />
+			</div>
+			<div id="users-list" class="admin-list"></div>
+		</section>
+	</main>
+
+	<!-- Detailed Modal -->
+	<div id="detail-modal" class="modal" style="display: none;">
+		<div class="modal-content" style="max-width: 800px;">
+			<div class="modal-header">
+				<h3 id="modal-title">Details</h3>
+				<button class="modal-close" onclick="closeDetailModal()">&times;</button>
+			</div>
+			<div id="modal-body" class="modal-body">
+				<!-- Content will be populated by JavaScript -->
+			</div>
+		</div>
+	</div>
+
+	<script>
+		let adminToken = null;
+		let allBookings = [];
+		let allUsers = [];
+
+		// Check if already logged in
+		function checkAuth() {
+			const token = localStorage.getItem('adminToken');
+			if (token) {
+				adminToken = token;
+				showDashboard();
+			}
+		}
+
+		// Admin login
+		document.getElementById('admin-login').addEventListener('submit', async (e) => {
+			e.preventDefault();
+			const status = document.getElementById('login-status');
+			const formData = new FormData(e.target);
+			const payload = Object.fromEntries(formData.entries());
+			
+			try {
+				const res = await fetch('/api/auth/admin/login', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(payload)
+				});
+				const data = await res.json();
+				
+				if (!res.ok) throw new Error(data.error || 'Login failed');
+				
+				adminToken = data.token;
+				localStorage.setItem('adminToken', data.token);
+				status.style.color = '#4ade80';
+				status.textContent = 'Login successful';
+				
+				setTimeout(() => showDashboard(), 500);
+			} catch (err) {
+				status.style.color = '#fca5a5';
+				status.textContent = err.message;
+			}
+		});
+
+		function logout() {
+			localStorage.removeItem('adminToken');
+			adminToken = null;
+			showLogin();
+		}
+
+		function showLogin() {
+			document.getElementById('login-section').style.display = 'block';
+			document.getElementById('dashboard-section').style.display = 'none';
+			document.getElementById('bookings-section').style.display = 'none';
+			document.getElementById('users-section').style.display = 'none';
+		}
+
+		function showDashboard() {
+			document.getElementById('login-section').style.display = 'none';
+			document.getElementById('dashboard-section').style.display = 'block';
+			document.getElementById('bookings-section').style.display = 'none';
+			document.getElementById('users-section').style.display = 'none';
+			loadStats();
+		}
+
+		function showBookings() {
+			document.getElementById('login-section').style.display = 'none';
+			document.getElementById('dashboard-section').style.display = 'none';
+			document.getElementById('bookings-section').style.display = 'block';
+			document.getElementById('users-section').style.display = 'none';
+			loadBookings();
+		}
+
+		function showUsers() {
+			document.getElementById('login-section').style.display = 'none';
+			document.getElementById('dashboard-section').style.display = 'none';
+			document.getElementById('bookings-section').style.display = 'none';
+			document.getElementById('users-section').style.display = 'block';
+			loadUsers();
+		}
+
+		async function loadStats() {
+			try {
+				const [bookingsRes, usersRes] = await Promise.all([
+					fetch('/api/admin/bookings', { headers: { Authorization: 'Bearer ' + adminToken } }),
+					fetch('/api/admin/users', { headers: { Authorization: 'Bearer ' + adminToken } })
+				]);
+				
+				allBookings = await bookingsRes.json();
+				allUsers = await usersRes.json();
+				
+				document.getElementById('total-bookings').textContent = allBookings.length;
+				document.getElementById('total-users').textContent = allUsers.length;
+				document.getElementById('total-teachers').textContent = allUsers.filter(u => u.role === 'teacher').length;
+				document.getElementById('total-students').textContent = allUsers.filter(u => u.role === 'student').length;
+			} catch (err) {
+				console.error('Failed to load stats:', err);
+			}
+		}
+
+		async function loadBookings() {
+			try {
+				const res = await fetch('/api/admin/bookings', { headers: { Authorization: 'Bearer ' + adminToken } });
+				allBookings = await res.json();
+				renderBookings(allBookings);
+			} catch (err) {
+				console.error('Failed to load bookings:', err);
+			}
+		}
+
+		async function loadUsers() {
+			try {
+				const res = await fetch('/api/admin/users', { headers: { Authorization: 'Bearer ' + adminToken } });
+				allUsers = await res.json();
+				renderUsers(allUsers);
+			} catch (err) {
+				console.error('Failed to load users:', err);
+			}
+		}
+
+		function renderBookings(bookings) {
+			const list = document.getElementById('bookings-list');
+			list.innerHTML = '';
+			
+			for (const booking of bookings) {
+				const div = document.createElement('div');
+				div.className = 'admin-item';
+				div.innerHTML = `
+					<div class="admin-item-header">
+						<div>
+							<div class="title">${booking.studentName} → ${booking.teacherName}</div>
+							<div class="sub">${booking.studentEmail} • ${booking.teacherSubject}</div>
+							<div class="date">${booking.date} at ${booking.time}</div>
+						</div>
+						<div class="admin-item-actions">
+							<div class="pill ${booking.status}">${booking.status}</div>
+							<div class="price">$${booking.teacherPrice}</div>
+						</div>
+					</div>
+				`;
+				list.appendChild(div);
+			}
+		}
+
+		function renderUsers(users) {
+			const list = document.getElementById('users-list');
+			list.innerHTML = '';
+			
+			for (const user of users) {
+				const div = document.createElement('div');
+				div.className = 'admin-item';
+				div.innerHTML = `
+					<div class="admin-item-header">
+						<div style="display: flex; gap: 12px; align-items: center;">
+							${user.imageUrl ? `<img src="${user.imageUrl}" alt="${user.name}" width="48" height="48" style="border-radius: 8px; object-fit: cover;"/>` : ''}
+							<div>
+								<div class="title">${user.name}</div>
+								<div class="sub">${user.email} • ${user.role}</div>
+								${user.role === 'teacher' ? `<div class="sub">${user.subject} • $${user.price || 0}</div>` : ''}
+							</div>
+						</div>
+						<div class="admin-item-actions">
+							<div class="pill">${user.bookingsCount} bookings</div>
+							<div class="date">${new Date(user.createdAt).toLocaleDateString()}</div>
+						</div>
+					</div>
+				`;
+				list.appendChild(div);
+			}
+		}
+
+		// Modal functions
+		function showBookingsModal() {
+			const modal = document.getElementById('detail-modal');
+			const modalTitle = document.getElementById('modal-title');
+			const modalBody = document.getElementById('modal-body');
+			
+			modalTitle.textContent = 'All Bookings';
+			modalBody.innerHTML = `
+				<div style="display: grid; gap: 16px;">
+					${allBookings.map(booking => `
+						<div style="background: white; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px;">
+							<div style="display: flex; gap: 16px; align-items: center;">
+								<div style="flex: 1;">
+									<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+										<div class="title">${booking.studentName} → ${booking.teacherName}</div>
+										<div class="pill ${booking.status}">${booking.status}</div>
+									</div>
+									<div class="sub">${booking.studentEmail} • ${booking.teacherSubject}</div>
+									<div class="date">${booking.date} at ${booking.time}</div>
+									<div style="color: #4ade80; font-weight: 600; margin-top: 4px;">$${booking.teacherPrice}</div>
+								</div>
+							</div>
+						</div>
+					`).join('')}
+				</div>
+			`;
+			
+			modal.style.display = 'flex';
+		}
+
+		function showUsersModal() {
+			const modal = document.getElementById('detail-modal');
+			const modalTitle = document.getElementById('modal-title');
+			const modalBody = document.getElementById('modal-body');
+			
+			modalTitle.textContent = 'All Users';
+			modalBody.innerHTML = `
+				<div style="display: grid; gap: 16px;">
+					${allUsers.map(user => `
+						<div style="background: white; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px;">
+							<div style="display: flex; gap: 16px; align-items: center;">
+								${user.imageUrl ? `<img src="${user.imageUrl}" alt="${user.name}" width="64" height="64" style="border-radius: 12px; object-fit: cover;"/>` : 
+									`<div style="width: 64px; height: 64px; background: rgba(14,165,233,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #7dd3fc;">${user.name.charAt(0)}</div>`}
+								<div style="flex: 1;">
+									<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+										<div class="title">${user.name}</div>
+										<div class="pill">${user.role}</div>
+									</div>
+									<div class="sub">${user.email}</div>
+									${user.role === 'teacher' ? `<div class="sub">${user.subject} • $${user.price || 0}</div>` : ''}
+									<div class="date">${user.bookingsCount} bookings • Joined ${new Date(user.createdAt).toLocaleDateString()}</div>
+								</div>
+							</div>
+						</div>
+					`).join('')}
+				</div>
+			`;
+			
+			modal.style.display = 'flex';
+		}
+
+		function showTeachersModal() {
+			const modal = document.getElementById('detail-modal');
+			const modalTitle = document.getElementById('modal-title');
+			const modalBody = document.getElementById('modal-body');
+			
+			const teachers = allUsers.filter(u => u.role === 'teacher');
+			
+			modalTitle.textContent = 'All Teachers';
+			modalBody.innerHTML = `
+				<div style="display: grid; gap: 16px;">
+					${teachers.map(teacher => `
+						<div style="background: white; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px;">
+							<div style="display: flex; gap: 16px; align-items: center;">
+								${teacher.imageUrl ? `<img src="${teacher.imageUrl}" alt="${teacher.name}" width="64" height="64" style="border-radius: 12px; object-fit: cover;"/>` : 
+									`<div style="width: 64px; height: 64px; background: rgba(245,158,11,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #fbbf24;">${teacher.name.charAt(0)}</div>`}
+								<div style="flex: 1;">
+									<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+										<div class="title">${teacher.name}</div>
+										<div class="pill">Teacher</div>
+									</div>
+									<div class="sub">${teacher.email}</div>
+									<div class="sub">${teacher.subject} • $${teacher.price || 0}/session</div>
+									<div class="date">${teacher.bookingsCount} bookings • Joined ${new Date(teacher.createdAt).toLocaleDateString()}</div>
+								</div>
+							</div>
+						</div>
+					`).join('')}
+				</div>
+			`;
+			
+			modal.style.display = 'flex';
+		}
+
+		function showStudentsModal() {
+			const modal = document.getElementById('detail-modal');
+			const modalTitle = document.getElementById('modal-title');
+			const modalBody = document.getElementById('modal-body');
+			
+			const students = allUsers.filter(u => u.role === 'student');
+			
+			modalTitle.textContent = 'All Students';
+			modalBody.innerHTML = `
+				<div style="display: grid; gap: 16px;">
+					${students.map(student => `
+						<div style="background: white; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px;">
+							<div style="display: flex; gap: 16px; align-items: center;">
+								<div style="width: 64px; height: 64px; background: rgba(59,130,246,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #60a5fa;">${student.name.charAt(0)}</div>
+								<div style="flex: 1;">
+									<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+										<div class="title">${student.name}</div>
+										<div class="pill">Student</div>
+									</div>
+									<div class="sub">${student.email}</div>
+									<div class="date">${student.bookingsCount} bookings • Joined ${new Date(student.createdAt).toLocaleDateString()}</div>
+								</div>
+							</div>
+						</div>
+					`).join('')}
+				</div>
+			`;
+			
+			modal.style.display = 'flex';
+		}
+
+		function closeDetailModal() {
+			document.getElementById('detail-modal').style.display = 'none';
+		}
+
+		// Close modal when clicking outside
+		window.onclick = function(event) {
+			const modal = document.getElementById('detail-modal');
+			if (event.target === modal) {
+				closeDetailModal();
+			}
+		}
+
+		// Search functionality
+		document.getElementById('booking-search').addEventListener('input', (e) => {
+			const query = e.target.value.toLowerCase();
+			const filtered = allBookings.filter(b => 
+				b.studentName.toLowerCase().includes(query) ||
+				b.studentEmail.toLowerCase().includes(query) ||
+				b.teacherName.toLowerCase().includes(query) ||
+				b.teacherSubject.toLowerCase().includes(query)
+			);
+			renderBookings(filtered);
+		});
+
+		document.getElementById('user-search').addEventListener('input', (e) => {
+			const query = e.target.value.toLowerCase();
+			const filtered = allUsers.filter(u => 
+				u.name.toLowerCase().includes(query) ||
+				u.email.toLowerCase().includes(query) ||
+				(u.subject && u.subject.toLowerCase().includes(query))
+			);
+			renderUsers(filtered);
+		});
+
+		// Initialize
+		checkAuth();
+
+
+		
+	</script>
+	<script src="admin.js"></script>
+</body>
+</html>

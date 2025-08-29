@@ -1,0 +1,166 @@
+/* ===== General Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'poppins';
+}
+
+body {
+  background: #f9fafb; /* Light gray background */
+  color: #111827; /* Dark gray text */
+  line-height: 1.6;
+  padding: 2rem;
+}
+
+/* ===== Container Layout ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* ===== Navigation ===== */
+.nav {
+  display: flex;
+  gap: 1rem;
+}
+
+
+.img-container {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.img-container img {
+  margin-right: 10px;
+}
+
+.img-container h1 {
+  font-size: 24px;
+  font-family: "IM Fell DW Pica", sans-serif;
+  white-space: nowrap;
+}
+/* ===== Buttons (Black) ===== */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  border-radius: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  background: #ffffff;   /* Black button */
+  color: #070707;        /* White text */
+  border: 1px solid black;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;  
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  min-width: auto;
+  flex: 0 0 auto; /* keeps them inline, not stretched */
+  text-align: center;
+}
+
+.btn:hover {
+  background: #000000;  
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* ===== Grid Layout ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+/* ===== Card ===== */
+.card {
+  background: #fff; /* White card */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* ===== Form Fields ===== */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.field label {
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.field input,
+.field textarea {
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: #000; /* Black focus border */
+}
+
+/* ===== Two-column fields ===== */
+.field.two {
+  display: flex;
+  gap: 1rem;
+}
+
+.field.two > div {
+  flex: 1;
+}
+
+/* ===== Status Messages ===== */
+.status {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+/* ===== Mobile Buttons Inline ===== */
+/* ===== Mobile Navigation under Logo ===== */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;   /* stack logo and nav vertically */
+    align-items: center;      /* center align */
+    text-align: center;
+  }
+
+  .nav {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;  /* buttons centered */
+  }
+
+}
+
+

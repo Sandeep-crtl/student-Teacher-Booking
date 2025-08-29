@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Explore Courses · Student–Teacher Booking</title>
+	<link rel="stylesheet" href="/landing.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-light.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/duotone.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/brands.css" />
+</head>
+<body>
+	<header class="container">
+		<div class="img-container">
+            <img src="./images/logo.png" alt="Logo" height="60" width="60">
+            <h1>Edu-Mentors</h1>
+        </div>
+		<!-- <h1>Explore Courses</h1> -->
+		<p class="subtitle">Browse teachers, see prices, and book your slot.</p>
+		<nav class="nav">
+			<a class="btn" href="#" onclick="handleBookNow()">Book Now</a>
+			<a class="btn" href="/login.html">Login</a>
+			<a class="btn" href="/signup.html">Sign up</a>
+		</nav>
+	</header>
+
+	<main class="container">
+		<div class="field">
+			<label for="q">Search</label>
+			<input id="q" type="text" placeholder="e.g., Math, Physics, Alice" />
+		</div>
+		<section id="cards" class="cards"></section>
+	</main>
+
+	<footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="./images/logo.png" alt="Edu-Mentors Logo" height="40" width="40">
+                <span style="font-family: 'Comfortaa', cursive; font-size: 1.2em;">Edu-Mentors</span>
+            </div>
+            
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; 2024 Edu-Mentors. All rights
+                    reserved.</p>
+            </div>
+        </div>
+        <div class="footer-credits">
+            <p>Designed by <a href="" target="_blank">Sandeep Bhukya</a></p>
+        </div>
+        </div>
+    </footer>
+
+	<script src="/auth.js" defer></script>
+	<script>
+		const cards = document.getElementById('cards');
+		const q = document.getElementById('q');
+
+		async function fetchTeachers(term=''){
+			const res = await fetch(term ? `/api/teachers?q=${encodeURIComponent(term)}` : '/api/teachers');
+			return res.json();
+		}
+
+		function render(teachers){
+			cards.innerHTML = '';
+			for(const t of teachers){
+				const a = document.createElement('a');
+				a.href = '#';
+				a.className = 'card-course';
+				a.onclick = (e) => {
+					e.preventDefault();
+					handleBookNow();
+				};
+				a.innerHTML = `
+					<img src="${t.imageUrl || 'https://via.placeholder.com/480x260'}" alt="${t.name}" />
+					<div class="course-body">
+						<div class="course-title">${t.name}</div>
+						<div class="course-sub">${t.subject}</div>
+						<div class="course-meta">
+							<span class="pill">$${(t.price ?? 0).toFixed(2)}/session</span>
+							<span class="pill">${t.slots.length} slots</span>
+						</div>
+					</div>
+				`;
+				cards.appendChild(a);
+			}
+		}
+
+		async function init(){
+			const list = await fetchTeachers();
+			render(list);
+		}
+
+		q.addEventListener('input', async (e)=>{
+			const list = await fetchTeachers(e.target.value.trim());
+			render(list);
+		});
+
+		init();
+
+		function handleBookNow() {
+			const token = localStorage.getItem('token');
+			if (!token) {
+				// Redirect to login page with return URL to booking page
+				window.location.href = `/login.html?next=${encodeURIComponent('/index.html')}`;
+			} else {
+				// User is logged in, go to booking page
+				window.location.href = '/index.html';
+			}
+		}
+	</script>
+</body>
+</html>
+
+

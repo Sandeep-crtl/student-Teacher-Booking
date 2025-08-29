@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Student–Teacher Booking</title>
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#0ea5e9" />
+    <meta name="description" content="Book a teacher slot quickly and easily" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎓</text></svg>">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-light.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/duotone.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/brands.css" />
+
+    
+</head>
+<body>
+    <header class="container">
+        <div class="img-container">
+            <img src="./images/logo.png" alt="Logo" height="60" width="60">
+            <h1>Edu-Mentors</h1>
+        </div>
+        <!-- <p class="subtitle">Find a teacher, pick a time, and book instantly.</p> -->
+        <nav class="nav">
+            <a class="btn" href="/login.html">Login</a>
+            <a class="btn" href="/signup.html">Sign up</a>
+        </nav>
+    </header>
+
+    <div class="home-page">
+        <div class="home-content">
+            <h1>Welcome to Edu-Mentors</h1>
+            <p style="font-family: 'Explora', cursive; font-size: 2em; color: #333; font-weight: 900;">
+                ~ Your journey to success starts here.
+                Connect. Learn. Grow.
+            </p>
+            <p> We provide personalized mentoring to help you achieve your academic and career goals.
+                Join us today and take the first step towards a brighter future!</p>
+            <i class="fas fa-check-circle"><span style="font-family:'Comfortaa'"> Personalized
+                    Mentoring</span></i>
+
+            <div class="home-icons">
+                <button class="btn" onclick="window.location.href='landing.html'">
+                    Explore Teachers <i class="fa-solid fa-angles-right"></i>
+                </button>
+            </div>
+
+        </div>
+        <div class="home-image">
+            <img src="./images/mentor-home.png" alt="Home Image">
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- View Toggle -->
+        <div class="view-toggle">
+            <button class="btn active" onclick="showLanding()">Explore Courses</button>
+            <button class="btn" onclick="showBooking()">Book Session</button>
+        </div>
+
+        <!-- Landing Page Section -->
+        <section id="landing-section">
+            <div class="field">
+                <label for="q">Search Teachers</label>
+                <input id="q" type="text" placeholder="e.g., Math, Physics, Alice" />
+            </div>
+            <section id="cards" class="cards"></section>
+        </section>
+
+        <!-- Booking Page Section -->
+        <section id="booking-section" class="section-hidden">
+            <div class="grid">
+                <section class="card">
+                    <h2>Find Teacher</h2>
+                    <div class="field">
+                        <label for="search">Search by name or subject</label>
+                        <input id="search" type="text" placeholder="e.g., Alice or Physics" />
+                    </div>
+                    <ul id="teachers" class="list"></ul>
+                </section>
+
+                <section class="card">
+                    <h2>Book Slot</h2>
+                    <form id="booking-form">
+                        <div class="field">
+                            <label for="teacherSelect">Teacher</label>
+                            <select id="teacherSelect" name="teacherId" required>
+                                <option value="">Select a teacher</option>
+                            </select>
+                        </div>
+                        <div class="field two">
+                            <div>
+                                <label for="date">Date</label>
+                                <input id="date" name="date" type="date" required />
+                            </div>
+                            <div>
+                                <label for="time">Time</label>
+                                <select id="time" name="time" required>
+                                    <option value="">Select time</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="note">Note (optional)</label>
+                            <textarea id="note" name="note" rows="3" placeholder="Topic or questions"></textarea>
+                        </div>
+                        <button 
+                        type="submit" 
+                        style="background-color: black; color: white; border: 1px solid black; border-radius: 10px; padding: 10px; margin-top: 10px; margin-bottom: 10px; width: 100%; height: 40px; cursor: pointer;"
+                        onmouseover="this.style.backgroundColor='white'; this.style.color='black';"
+                        onmouseout="this.style.backgroundColor='black'; this.style.color='white';"
+                      >
+                        Book
+                      </button>
+                      
+                        <p id="status" class="status" role="status"></p>
+                    </form>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="./images/logo.png" alt="Edu-Mentors Logo" height="40" width="40">
+                <span style="font-family: 'Comfortaa', cursive; font-size: 1.2em;">Edu-Mentors</span>
+            </div>
+            
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; 2024 Edu-Mentors. All rights
+                    reserved.</p>
+            </div>
+        </div>
+        <div class="footer-credits">
+            <p>Designed by <a href="" target="_blank">Sandeep Bhukya</a></p>
+        </div>
+        </div>
+
+    </footer>
+
+    <script src="/auth.js" defer></script>
+    <script src="/app.js" defer></script>
+    <script>
+        // Landing page functionality
+        const cards = document.getElementById('cards');
+        const q = document.getElementById('q');
+
+        async function fetchTeachers(term=''){
+            const res = await fetch(term ? `/api/teachers?q=${encodeURIComponent(term)}` : '/api/teachers');
+            return res.json();
+        }
+
+        function render(teachers){
+            cards.innerHTML = '';
+            for(const t of teachers){
+                const a = document.createElement('a');
+                a.href = '#';
+                a.className = 'card-course';
+                a.onclick = (e) => {
+                    e.preventDefault();
+                    handleBookNow();
+                };
+                a.innerHTML = `
+                    <img src="${t.imageUrl || 'https://via.placeholder.com/480x260'}" alt="${t.name}" />
+                    <div class="course-body">
+                        <div class="course-title">${t.name}</div>
+                        <div class="course-sub">${t.subject}</div>
+                        <div class="course-meta">
+                            <span class="pill">$${(t.price ?? 0).toFixed(2)}/session</span>
+                            <span class="pill">${t.slots.length} slots</span>
+                        </div>
+                    </div>
+                `;
+                cards.appendChild(a);
+            }
+        }
+
+        async function initLanding(){
+            const list = await fetchTeachers();
+            render(list);
+        }
+
+        q.addEventListener('input', async (e)=>{
+            const list = await fetchTeachers(e.target.value.trim());
+            render(list);
+        });
+
+        function handleBookNow() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                // Redirect to login page with return URL to booking page
+                window.location.href = `/login.html?next=${encodeURIComponent('/index.html')}`;
+            } else {
+                // User is logged in, go to booking page
+                showBooking();
+            }
+        }
+
+        // View toggle functionality
+        function showLanding() {
+            document.getElementById('landing-section').classList.remove('section-hidden');
+            document.getElementById('booking-section').classList.add('section-hidden');
+            document.querySelectorAll('.view-toggle .btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.view-toggle .btn:first-child').classList.add('active');
+            initLanding();
+        }
+
+        function showBooking() {
+            document.getElementById('landing-section').classList.add('section-hidden');
+            document.getElementById('booking-section').classList.remove('section-hidden');
+            document.querySelectorAll('.view-toggle .btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.view-toggle .btn:last-child').classList.add('active');
+            // Initialize booking page if not already done
+            if (typeof init === 'function') {
+                init();
+            }
+        }
+
+        // Initialize landing page by default
+        initLanding();
+    </script>
+</body>
+</html>
+
+

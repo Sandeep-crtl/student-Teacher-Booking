@@ -1,0 +1,603 @@
+
+:root {
+  /* Colors */
+  --primary-color: #0ea5e9; /* Sky Blue */
+  --primary-dark: #0284c7;
+  
+  /* Dark Theme Variables (kept for reference, but unused in light theme) */
+  --bg-dark-page: #020617;   /* Slate 950 */
+  --bg-dark-card: #0f172a;   /* Slate 900 */
+  --text-dark-primary: #f8fafc; /* Slate 50 */
+  --text-dark-secondary: #94a3b8; /* Slate 400 */
+  --border-dark: #334155;    /* Slate 700 */
+
+  /* Light Theme */
+  --bg-light-page: #ffffff;
+  --bg-light-card: #ffffff;
+  --bg-light-subtle: #f8fafc; /* For hover states, etc. */
+  --text-light-primary: #1e293b; /* Slate 800 */
+  --text-light-secondary: #64748b; /* Slate 500 */
+  --border-light: #e2e8f0;   /* Slate 200 */
+
+  /* General */
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+}
+
+/* Basic Reset & Font Setup */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body now uses a white background and dark text */
+body {
+  font-family: poppins;
+  background-color: var(--bg-light-page);
+  color: var(--text-light-primary);
+  line-height: 1.6;
+}
+
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+main .grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 992px) {
+  main .grid {
+    grid-template-columns: 1fr 1.5fr;
+  }
+}
+
+
+/* Header & Footer                           */
+
+header.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 1.75rem;
+}
+
+header .subtitle {
+  color: var(--text-light-secondary);
+  flex-basis: 100%;
+  order: 1;
+}
+
+.foot {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-light);
+  color: var(--text-light-secondary);
+  font-size: 0.9rem;
+}
+
+.img-container {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.img-container img {
+  margin-right: 10px;
+}
+
+.img-container h1 {
+  font-size: 24px;
+  font-family: "IM Fell DW Pica", sans-serif;
+  white-space: nowrap;
+}
+
+/* Hero Section */
+/* Home Page Container */
+.home-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 10%;
+  min-height: 100vh;
+  background: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Left Side Content */
+.home-content {
+  max-width: 50%;
+}
+
+.home-content h1 {
+  font-size: 3rem;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+.home-content p {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.home-content i {
+  font-size: 1.2rem;
+  color: #28a745;
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Get Started Button */
+.btn {
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.btn:hover {
+  background-color: white;
+  color: #000000;
+  border: 2px solid #000000;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* Right Side Image */
+.home-image img {
+  max-width: 450px;
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .home-page {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 5%;
+  }
+
+  .home-content {
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .home-image img {
+    max-width: 300px;
+  }
+}
+
+
+
+
+
+/* General Components (Buttons, Fields, etc.) */
+
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+
+/* Nav Buttons */
+.nav .btn {
+  background: linear-gradient(145deg, #ffffff, #f3f3f3);
+  color: #222;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  border-radius: 12px;
+  width: 120px;
+  height: 45px;
+  margin: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Hover effect */
+.nav .btn:hover {
+  border-color: black;
+  background: black;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Forms (used in both views) */
+.field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border-radius: var(--border-radius-md);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: var(--bg-light-card);
+  border: 1px solid var(--border-light);
+  color: var(--text-light-primary);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+}
+
+/* Pills now have a light theme style */
+.pill {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background-color: #f1f5f9; /* Slate 100 */
+  color: #475569; /* Slate 600 */
+}
+
+/* Hide/Show Utility */
+.section-hidden {
+  display: none !important;
+}
+
+
+/* View Toggle                               */
+
+/* View toggle adapted for light theme */
+.view-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  background-color: var(--bg-light-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-md);
+  padding: 0.5rem;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.view-toggle .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border: none;
+  background: none;
+  color: var(--text-light-secondary);
+}
+
+.view-toggle .btn.active {
+  background: black;
+  color: white;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+}
+
+
+/* Landing Section (NOW Light Theme Cards)   */
+
+#landing-section .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Course cards converted to a light theme */
+.card-course {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  color: black;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.card-course:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  border-color: rgba(14,165,233,0.3);
+}
+
+.card-course img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.course-body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Ensures this container fills the card's space */
+}
+
+.course-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.course-sub {
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.course-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto; /* Pushes meta info to the bottom of the card */
+}
+
+
+/* Booking Section (Light Theme Cards)       */
+
+#booking-section .card {
+  background-color: var(--bg-light-card);
+  color: var(--text-light-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+}
+
+#booking-section .card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+#booking-section .field.two {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 576px) {
+  #booking-section .field.two {
+    flex-direction: row;
+  }
+  #booking-section .field.two > div {
+    flex: 1;
+  }
+}
+
+#booking-section form .btn {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+}
+#booking-section form .btn:hover {
+  background-color: var(--primary-dark);
+}
+
+#booking-section .status {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+#booking-section .list {
+  list-style-type: none;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-md);
+}
+
+#booking-section .list li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-light);
+}
+
+#booking-section .list li:last-child {
+  border-bottom: none;
+}
+/* Ensure nav buttons stay inline on mobile */
+.nav {
+  display: flex;
+  flex-wrap: nowrap;      /* prevent wrapping */
+  overflow-x: auto;       /* enable horizontal scroll */
+  gap: 10px;
+  -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+}
+
+.nav .btn {
+  flex: 0 0 auto;   /* prevent buttons from shrinking */
+  width: auto;      /* buttons take only needed space */
+  white-space: nowrap; /* text doesn’t wrap inside button */
+}
+
+
+
+/* On very small screens, reduce padding so buttons fit nicely */
+@media (max-width: 576px) {
+  .nav .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Footer Styles */
+footer {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  padding: 40px 0 15px 0;
+  width: 100%;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo img {
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #16c203;
+}
+
+.footer-social {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.footer-social a {
+  color: #16c203;
+  font-size: 1.3rem;
+  transition: color 0.2s;
+}
+
+.footer-social a:hover {
+  color: #2c3e50;
+}
+
+.footer-copy {
+  flex-basis: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footer-copy p {
+  color: #555;
+  font-size: 1rem;
+}
+
+.footer-credits {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.footer-credits p {
+  color: #888;
+  font-size: 0.95rem;
+}
+
+.footer-credits a {
+  color: #16c203;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-credits a:hover {
+  text-decoration: underline;
+}
+/* Responsive Footer */
+@media (max-width: 900px) {
+  .footer-content {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 0 10px;
+  }
+  .footer-links, .footer-social {
+      flex-direction: row;
+      gap: 15px;
+      justify-content: center;
+  }
+  .footer-links {
+      margin-bottom: 10px;
+  }
+  .footer-copy {
+      margin-top: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  footer {
+      padding: 25px 0 10px 0;
+  }
+  .footer-content {
+      gap: 15px;
+      padding: 0 5px;
+  }
+  .footer-logo span {
+      font-size: 1em;
+  }
+  .footer-links a, .footer-copy p, .footer-credits p {
+      font-size: 0.95em;
+  }
+  .footer-social a {
+      font-size: 1.1rem;
+  }
+}

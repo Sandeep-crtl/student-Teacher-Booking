@@ -1,0 +1,335 @@
+/* ========= Base Reset ========= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Page background → white */
+body {
+  background: #ffffff;
+  color: #0f172a;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ========= Layout ========= */
+.container {
+  width: min(1100px, 92vw);
+  margin-inline: auto;
+  padding: 20px;
+}
+
+/* ========= Header ========= */
+header.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px auto;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #111111, #444444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #64748b;
+}
+
+/* ========= Nav Buttons ========= */
+.nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: #fdfdfd; 
+  color: #111111;
+  border: 1px solid #111111;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.25s ease;
+}
+
+.btn:hover {
+  background: #111111;   
+  color: #ffffff;  
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+.img-container {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.img-container img {
+  margin-right: 10px;
+}
+
+.img-container h1 {
+  font-size: 24px;
+  font-family: "IM Fell DW Pica", sans-serif;
+  white-space: nowrap;
+}
+
+/* ========= Search ========= */
+.field {
+  margin: 20px 0;
+}
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  color: #475569;
+  font-size: 0.9rem;
+}
+#q {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+  transition: border 0.2s, box-shadow 0.2s;
+}
+#q:focus {
+  border-color: #111111;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+}
+#q::placeholder {
+  color: #94a3b8;
+}
+
+/* ========= Cards ========= */
+.cards {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card-course {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+}
+
+.card-course:hover {
+  transform: translateY(-6px);
+  border-color: #111111;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+}
+
+.card-course img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.course-body {
+  padding: 16px;
+}
+
+.course-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.course-sub {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.course-meta {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #f1f5f9;
+  color: #111111;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ========= Footer ========= */
+.foot {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #475569;
+  padding: 20px 0;
+  border-top: 1px solid #e2e8f0;
+}
+/* Footer Styles */
+footer {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  padding: 40px 0 15px 0;
+  width: 100%;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo img {
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #16c203;
+}
+
+.footer-social {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.footer-social a {
+  color: #16c203;
+  font-size: 1.3rem;
+  transition: color 0.2s;
+}
+
+.footer-social a:hover {
+  color: #2c3e50;
+}
+
+.footer-copy {
+  flex-basis: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footer-copy p {
+  color: #555;
+  font-size: 1rem;
+}
+
+.footer-credits {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.footer-credits p {
+  color: #888;
+  font-size: 0.95rem;
+}
+
+.footer-credits a {
+  color: #16c203;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-credits a:hover {
+  text-decoration: underline;
+}
+/* Responsive Footer */
+@media (max-width: 900px) {
+  .footer-content {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 0 10px;
+  }
+  .footer-links, .footer-social {
+      flex-direction: row;
+      gap: 15px;
+      justify-content: center;
+  }
+  .footer-links {
+      margin-bottom: 10px;
+  }
+  .footer-copy {
+      margin-top: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  footer {
+      padding: 25px 0 10px 0;
+  }
+  .footer-content {
+      gap: 15px;
+      padding: 0 5px;
+  }
+  .footer-logo span {
+      font-size: 1em;
+  }
+  .footer-links a, .footer-copy p, .footer-credits p {
+      font-size: 0.95em;
+  }
+  .footer-social a {
+      font-size: 1.1rem;
+  }
+}

@@ -1,0 +1,371 @@
+/* ========================================= */
+/* Global Styles & Variables                 */
+/* ========================================= */
+:root {
+  --primary-color: #2563eb;     /* Rich blue */
+  --primary-dark: #1d4ed8;      /* Darker blue for hover */
+  --accent-color: #f43f5e;      /* Pink/red accent */
+  --text-dark: #0f172a;         /* Almost black */
+  --text-light: #475569;        /* Muted dark gray */
+  --muted: #94a3b8;             /* Subtle muted */
+  --bg-light: #ffffff;          /* White card bg */
+  --bg-page: #f1f5f9;           /* Softer gray background */
+  --border-color: #e2e8f0;      /* Neutral borders */
+  --success-color: #16a34a;     /* Green for success */
+  --warning-color: #f59e0b;     /* Amber */
+  --error-color: #dc2626;       /* Red */
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  --border-radius: 14px;
+}
+
+/* Basic Reset & Font Setup */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'poppins';
+  background-color: var(--bg-page);
+  color: var(--text-dark);
+  line-height: 1.65;
+}
+
+/* ========================================= */
+/* Layout & Container                        */
+/* ========================================= */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* ========================================= */
+/* Header & Navigation                       */
+/* ========================================= */
+header.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 0.75rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav::-webkit-scrollbar {
+  display: none;
+}
+
+/* ========================================= */
+/* General Components (Cards, Buttons, Fields) */
+/* ========================================= */
+.card {
+  background-color: var(--bg-light);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: var(--primary-dark);
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.6rem;
+  border-radius: 10px;
+  font-weight: 600;
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.25s ease-in-out;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+/* Form buttons */
+form .btn {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+form .btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Navbar buttons */
+.nav .btn {
+  background: var(--bg-light);
+  color: black;
+  border: 1px solid black;
+}
+
+.nav .btn:hover {
+  background: #000000;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Input Fields */
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.img-container {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.img-container img {
+  margin-right: 10px;
+}
+
+.img-container h1 {
+  font-size: 24px;
+  font-family: "IM Fell DW Pica", sans-serif;
+  white-space: nowrap;
+}
+
+.field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-light);
+}
+
+.field input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.status {
+  min-height: 1.6em;
+  margin-top: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ========================================= */
+/* Dashboard Specific Styles                 */
+/* ========================================= */
+.stat-card {
+  padding: 1.25rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: var(--bg-light);
+  box-shadow: var(--shadow);
+}
+
+.stat-card.clickable:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+}
+
+.stat-card .stat-number {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+
+.stat-card .stat-label {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+/* Admin List View */
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-item {
+  border: 1px solid var(--border-color);
+  padding: 1.25rem;
+  border-radius: var(--border-radius);
+  background: var(--bg-light);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s;
+}
+
+.admin-item:hover {
+  transform: translateY(-3px);
+}
+
+.admin-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.admin-item-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.admin-item .title {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.admin-item .sub {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.admin-item .date {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.admin-item .price {
+  font-weight: 700;
+  color: var(--success-color);
+}
+
+/* Pills */
+.pill {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  text-transform: capitalize;
+  background-color: #e2e8f0;
+  color: #475569;
+  box-shadow: var(--shadow);
+}
+
+.pill.confirmed, .pill.completed {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.pill.pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.pill.cancelled, .pill.rejected {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* ========================================= */
+/* Modal Styles                              */
+/* ========================================= */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(15, 23, 42, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modal-content {
+  background-color: var(--bg-light);
+  border-radius: var(--border-radius);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--text-dark);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+/* Dark mode pills inside modal */
+.modal-body .title { color: #0f172a; font-weight: 700; }
+.modal-body .sub { color: #475569; font-size: 0.9rem; }
+.modal-body .date { color: #64748b; font-size: 0.85rem; }
+.modal-body .pill {
+    background-color: #e2e8f0;
+    color: #334155;
+}
+.modal-body .pill.completed, .modal-body .pill.confirmed { background-color: #22c55e; color: #fff; }
+.modal-body .pill.pending { background-color: #facc15; color: #78350f; }
+.modal-body .pill.cancelled { background-color: #ef4444; color: #fff; }

@@ -1,0 +1,462 @@
+/* ========================================= */
+/* Global Styles & Variables                 */
+/* ========================================= */
+:root {
+    --primary-color: #0ea5e9; /* A vibrant sky blue */
+    --primary-dark: #0284c7;  /* A darker shade for hover */
+    --text-dark: #1e293b;     /* For headings and important text */
+    --text-light: #64748b;    /* For secondary text */
+    --muted: #94a3b8;         /* For less important text */
+    --bg-light: #ffffff;      /* Card background */
+    --bg-page: #f8fafc;      /* Page background */
+    --border-color: #e2e8f0;   /* Borders for inputs */
+    --success-color: #22c55e;  /* Green for success messages */
+    --warning-color: #f59e0b;  /* Amber for pending status */
+    --error-color: #ef4444;    /* Red for error/cancelled status */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+    --border-radius: 12px;
+  }
+  
+  /* Basic Reset & Font Setup */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-dark);
+    line-height: 1.6;
+  }
+  
+  /* ========================================= */
+  /* Layout & Container                        */
+  /* ========================================= */
+  .container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+  
+  /* ========================================= */
+  /* Header, Nav & Footer                      */
+  /* ========================================= */
+  header.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+  }
+  
+  .nav {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  .foot {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-light);
+    font-size: 0.9rem;
+  }
+
+  .img-container {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.img-container img {
+    margin-right: 10px;
+}
+
+.img-container h1 {
+    font-size: 24px;
+    font-family: "IM Fell DW Pica", sans-serif;
+    white-space: nowrap;
+}
+  
+  /* ========================================= */
+  /* General Components (Cards, Buttons, etc.) */
+  /* ========================================= */
+  .card {
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+  }
+  
+  .card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    border: 2px solid transparent;
+    background-color: #fbfbfb;   
+    border: 1px solid #000000;
+    color: #000000;             
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .btn:hover {
+    background-color: #010101;   
+    color: #fbfbfb;
+    transform: translateY(-2px); /* Subtle lift */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Shadow on hover */
+  }
+  
+  
+  .title {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+  }
+  
+  .sub {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-transform: capitalize;
+  }
+  
+  /* ========================================= */
+  /* My Bookings Page Specific Styles          */
+  /* ========================================= */
+  
+  /* Summary Card */
+  #summary.card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  /* Bookings Grid Layout */
+  .bookings-grid {
+    display: grid;
+    gap: 1.5rem;
+    /* Responsive grid that shows 1 or 2 columns based on width */
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+  
+  /* Individual Booking Card */
+  .booking-card {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .booking-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .booking-info {
+    flex-grow: 1;
+  }
+  
+  .booking-date {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  
+  .booking-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.75rem;
+  }
+  
+  .booking-details {
+    border-top: 1px solid var(--border-color);
+    padding: 1rem;
+    background-color: #f8fafc; /* slightly different background */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .booking-details .price {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--success-color);
+  }
+  
+  .booking-details .note {
+    font-style: italic;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    flex-grow: 1;
+  }
+  
+  .booking-details .timer {
+      background-color: #fffbeb;
+      color: #a44700;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+  }
+  
+  /* Delete Button */
+  .btn-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    opacity: 0.5;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  
+  .btn-delete:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  
+  /* Pill Styles for Statuses */
+  .pill {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    text-transform: capitalize;
+    background-color: #e2e8f0;
+    color: #475569;
+  }
+  
+  .pill.clickable {
+      cursor: pointer;
+      transition: background-color 0.2s;
+  }
+  .pill.clickable:hover {
+      background-color: #d1d8e0;
+  }
+  
+  .pill.upcoming { background-color: #dbeafe; color: #1e40af; }
+  .pill.starting { background-color: #fef3c7; color: #92400e; }
+  .pill.ongoing { background-color: #e0e7ff; color: #3730a3; }
+  .pill.completed { background-color: #dcfce7; color: #166534; }
+  
+  
+  /* ========================================= */
+  /* Modal Styles (Reused from Admin)          */
+  /* ========================================= */
+  
+  .modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(15, 23, 42, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  .modal-content {
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal-header {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+  }
+  
+  .modal-header h3 {
+    font-size: 1.25rem;
+  }
+  
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  
+  .modal-close:hover {
+    color: var(--text-dark);
+  }
+  
+  .modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+  }
+  /* Footer Styles */
+footer {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  padding: 40px 0 15px 0;
+  width: 100%;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo img {
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #16c203;
+}
+
+.footer-social {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.footer-social a {
+  color: #16c203;
+  font-size: 1.3rem;
+  transition: color 0.2s;
+}
+
+.footer-social a:hover {
+  color: #2c3e50;
+}
+
+.footer-copy {
+  flex-basis: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footer-copy p {
+  color: #555;
+  font-size: 1rem;
+}
+
+.footer-credits {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.footer-credits p {
+  color: #888;
+  font-size: 0.95rem;
+}
+
+.footer-credits a {
+  color: #16c203;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-credits a:hover {
+  text-decoration: underline;
+}
+/* Responsive Footer */
+@media (max-width: 900px) {
+  .footer-content {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 0 10px;
+  }
+  .footer-links, .footer-social {
+      flex-direction: row;
+      gap: 15px;
+      justify-content: center;
+  }
+  .footer-links {
+      margin-bottom: 10px;
+  }
+  .footer-copy {
+      margin-top: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  footer {
+      padding: 25px 0 10px 0;
+  }
+  .footer-content {
+      gap: 15px;
+      padding: 0 5px;
+  }
+  .footer-logo span {
+      font-size: 1em;
+  }
+  .footer-links a, .footer-copy p, .footer-credits p {
+      font-size: 0.95em;
+  }
+  .footer-social a {
+      font-size: 1.1rem;
+  }
+}

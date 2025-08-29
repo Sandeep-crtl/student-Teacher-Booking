@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Sign up · Student–Teacher Booking</title>
+	<link rel="stylesheet" href="/signup.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+	<header class="container">
+		<div class="img-container">
+            <img src="./images/logo.png" alt="Logo" height="60" width="60">
+            <h1>Edu-Mentors</h1>
+        </div>
+		<!-- <h1>Create your account</h1> -->
+		<nav class="nav">
+			<a class="btn" href="/index.html">Book</a>
+			<a class="btn" href="/landing.html">Courses</a>
+			<a class="btn" href="/login.html">Login</a>
+		</nav>
+	</header>
+	<main class="container grid">
+		<section class="card">
+			<h2>Student Sign up</h2>
+			<form id="student-signup">
+				<div class="field">
+					<label>Name</label>
+					<input name="name" required />
+				</div>
+				<div class="field">
+					<label>Email</label>
+					<input name="email" type="email" required />
+				</div>
+				<div class="field">
+					<label>Password</label>
+					<input name="password" type="password" required />
+				</div>
+				<button class="btn">Sign up</button>
+				<p class="status" id="student-status"></p>
+			</form>
+		</section>
+		<section class="card">
+			<h2>Teacher Sign up</h2>
+			<form id="teacher-signup" enctype="multipart/form-data">
+				<div class="field">
+					<label>Name</label>
+					<input name="name" required />
+				</div>
+				<div class="field">
+					<label>Email</label>
+					<input name="email" type="email" required />
+				</div>
+				<div class="field">
+					<label>Subject</label>
+					<input name="subject" required />
+				</div>
+				<div class="field">
+					<label>Bio</label>
+					<textarea name="bio" rows="3"></textarea>
+				</div>
+				<div class="field two">
+					<div>
+						<label>Image URL</label>
+						<input name="imageUrl" placeholder="https://... (optional if uploading)" />
+					</div>
+					<div>
+						<label>Price ($/session)</label>
+						<input name="price" type="number" min="0" step="0.01" />
+					</div>
+				</div>
+				<div class="field">
+					<label>Upload Image</label>
+					<input name="imageFile" type="file" accept="image/*" />
+				</div>
+				<div class="field">
+					<label>Password</label>
+					<input name="password" type="password" required />
+				</div>
+				<button class="btn">Sign up</button>
+				<p class="status" id="teacher-status"></p>
+			</form>
+		</section>
+	</main>
+	<script src="/auth.js" defer></script>
+	<script>
+		function onSubmit(formId, url, statusId){
+			const form = document.getElementById(formId);
+			const status = document.getElementById(statusId);
+			form.addEventListener('submit', async (e)=>{
+				e.preventDefault();
+				status.textContent = '';
+				const formData = new FormData(form);
+				try{
+					const res = await fetch(url,{method:'POST', body: formData});
+					const data = await res.json();
+					if(!res.ok) throw new Error(data.error||'Sign up failed');
+					localStorage.setItem('token', data.token);
+					status.style.color = '#4ade80';
+					status.textContent = 'Sign up successful';
+					setTimeout(()=> location.replace('/index.html'), 500);
+				}catch(err){
+					status.style.color = '#fca5a5';
+					status.textContent = err.message;
+				}
+			});
+		}
+		onSubmit('student-signup','/api/auth/student/signup','student-status');
+		onSubmit('teacher-signup','/api/auth/teacher/signup','teacher-status');
+	</script>
+</body>
+</html>
+
+
