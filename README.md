@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Student–Teacher Booking
 
 Run MongoDB locally or use MongoDB Atlas. Create `.env`:
@@ -17,3 +18,6 @@ npm start
 Open `http://localhost:3000`.
 
 
+=======
+# student-Teacher-Booking
+>>>>>>> 9ab2c059acd6ebcac295f9a0bc4b337ed4630aad
